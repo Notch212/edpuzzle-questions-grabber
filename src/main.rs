@@ -2,13 +2,17 @@ use serde::Deserialize;
 use ureq;
 use std::io;
 
+fn read_line() -> Option<String> {
+    let mut input = String::new();
+    let read_line_result = io::stdin().read_line(&mut input);
+    if read_line_result.is_ok() { Some(input) } else { None }
+}
+
 fn main() {
-    let mut token: String = String::new(); //get this using some type of cookie editor - EditThisCookie or Cookie Editor
-    let mut magic_hash: String = String::new();
     println!("enter cookie for token: ");
-    io::stdin().read_line(&mut token).expect("unable to read line");
+    let token = read_line().unwrap();
     println!("enter hash: ");
-    io::stdin().read_line(&mut magic_hash).expect("unable to read line");
+    let magic_hash = read_line().unwrap();
 
     let api_url = format!("https://edpuzzle.com/api/v3/assignments/{}", magic_hash);
 
@@ -33,6 +37,7 @@ fn main() {
         }
     }
 
+    println!("hit enter to exit");
     let mut empty_string = String::new();
     io::stdin().read_line(&mut empty_string).expect("unable to read line");
 }
