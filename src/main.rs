@@ -1,13 +1,22 @@
 use serde::Deserialize;
 use ureq;
+use std::io;
 
 fn main() {
-    let token = "------"; //get this using some type of cookie editor - EditThisCookie or Cookie Editor
+    let mut token: String = String::new(); //get this using some type of cookie editor - EditThisCookie or Cookie Editor
+    let mut magic_hash: String = String::new();
+    println!("enter cookie for token: ");
+    io::stdin().read_line(&mut token).expect("unable to read line");
+    println!("enter hash: ");
+    io::stdin().read_line(&mut magic_hash).expect("unable to read line");
+
+    let api_url = format!("https://edpuzzle.com/api/v3/assignments/{}", magic_hash);
+
     let agent = ureq::Agent::new()
         .set("Cookie", &format!("token={}", token))
         .build();
     let response = agent
-        .get("https://edpuzzle.com/api/v3/assignments/----") //replace --- with the assignment id thing, should be obvious
+        .get(&api_url)
         .call()
         .into_json()
         .unwrap();
@@ -17,10 +26,10 @@ fn main() {
     for question in questions {
         //0 is hardcoded
         let question_body = &question.body[0];
-        if question_body.html.len() == 0 { //if there is no html text, read the normal text
-            println!("question text: {}", question_body.text);
-        } else { //print the html text
+        if question_body.text.len() == 0 { //if there is no normal text, read the html text
             println!("question html: {}", question_body.html);
+        } else { //print the text
+            println!("question text: {}", question_body.text);
         }
     }
 }
