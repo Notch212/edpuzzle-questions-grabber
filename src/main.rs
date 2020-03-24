@@ -32,6 +32,9 @@ fn main() {
             println!("question text: {}", question_body.text);
         }
     }
+
+    let mut empty_string = String::new();
+    io::stdin().read_line(&mut empty_string).expect("unable to read line");
 }
 
 #[derive(Debug, Deserialize)]
