@@ -2,12 +2,12 @@ use serde::Deserialize;
 use ureq;
 
 fn main() {
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDc3OWQxMTZmYjI3NTQwYzU1YTQ0NGEiLCJyb2xlIjoic3R1ZGVudCIsInJlZ2lzdGVyZWRBdCI6MTU2ODEyMDA4MSwiaXNBZG1pbiI6ZmFsc2UsImJlY29tZVRoaXNVc2VyIjpmYWxzZSwiaXNPcGVuQ2xhc3Nyb29tVXNlciI6ZmFsc2UsImlhdCI6MTU4NTA3NDM5NywiZXhwIjoxNTg1Njc5MTk3LCJqdGkiOiI1ZTdhNTBkZGYzYzlkYjNmOTExYzYyYTgifQ.WXrCd8BVcmCPG06cYCST64Af6SwQYw7JdGwk4MvSmAM"; //get this using some type of cookie editor - EditThisCookie or Cookie Editor
+    let token = "------"; //get this using some type of cookie editor - EditThisCookie or Cookie Editor
     let agent = ureq::Agent::new()
         .set("Cookie", &format!("token={}", token))
         .build();
     let response = agent
-        .get("https://edpuzzle.com/api/v3/assignments/5e73a215b35f833e3e663e77")
+        .get("https://edpuzzle.com/api/v3/assignments/----") //replace --- with the assignment id thing, should be obvious
         .call()
         .into_json()
         .unwrap();
